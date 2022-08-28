@@ -22,13 +22,16 @@ class Key(Gtk.Button):
 
 
     def setup_signals(self):
-        self.connect("released", self._clicked)
+        self.connect("released", self._do_type)
         self.connect("toggle-caps", self.toggle_caps)
         self.connect("toggle-symbol-keys", self.toggle_symbol_keys)
 
-    def _clicked(self, widget = None):
+    def _do_type(self, widget = None):
         key = self.get_label().strip()
         typwriter.type(key)
+
+    def _do_press_special_key(self, widget = None):
+        typwriter.press_special_keys(self.get_label())
 
     def toggle_symbol_keys(self, widget = None, eve = None):
         self._is_symbol = not self._is_symbol

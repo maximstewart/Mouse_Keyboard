@@ -7,7 +7,7 @@ from gi.repository import Gtk
 
 # Application imports
 from ..widgets.key import Key
-from .bottom_key_row import Bottom_Key_Row
+from ..bottom_key_row import Bottom_Key_Row
 
 
 class KeyboardRowMatchError(Exception):
@@ -21,7 +21,6 @@ class Keys_Column(Gtk.Box):
         super(Keys_Column, self).__init__()
 
         self.setup_styling()
-        self.setup_signals()
         self.setup_key_buttons()
 
         self.show_all()
@@ -31,9 +30,6 @@ class Keys_Column(Gtk.Box):
         self.set_orientation(1)  # HORIZONTAL = 0, VERTICAL = 1
         self.set_property("homogeneous", True)
         self.set_hexpand(True)
-
-    def setup_signals(self):
-        pass
 
     def setup_key_buttons(self):
         keys = keys_set["keys"]

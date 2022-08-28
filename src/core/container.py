@@ -6,11 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from .columns import Left_Column, Keys_Column, Right_Column
-from .signals_mixin import SignalsMixin
-
-
-
+from .columns import Left_Column, Keys_Column, Right_Column, Controls_Column
 
 
 
@@ -40,9 +36,13 @@ class Auto_Type(Gtk.Box):
         self.add(self._type_btn)
         self.add(pad2)
 
+        self.setup_styling()
+
         self.setup_signals()
         self.show_all()
 
+    def setup_styling(self):
+        self.set_margin_bottom(5)
 
     def setup_signals(self):
         self._type_btn.connect("released", self.type_out)
@@ -51,13 +51,12 @@ class Auto_Type(Gtk.Box):
         text = self._auto_typer.get_text()
         typwriter.type_string(text)
 
-class Main_Container(SignalsMixin, Gtk.Box):
+class Main_Container(Gtk.Box):
     """docstring for Main_Container."""
 
     def __init__(self):
         super(Main_Container, self).__init__()
 
-        self.setup_custom_event_signals()
         self.setup_styling()
         self.add_columns()
 
@@ -72,6 +71,7 @@ class Main_Container(SignalsMixin, Gtk.Box):
         self.add(Left_Column())
         self.add(Keys_Column())
         self.add(Right_Column())
+        self.add(Controls_Column())
 
 class Container(Gtk.Box):
     """docstring for Container."""
@@ -88,6 +88,9 @@ class Container(Gtk.Box):
     def setup_styling(self):
         self.set_orientation(1)  # HORIZONTAL = 0, VERTICAL = 1
         self.set_vexpand(True)
+        self.set_margin_start(5)
+        self.set_margin_top(5)
+        self.set_margin_bottom(5)
 
     def add_content(self):
         self.add(Auto_Type())
