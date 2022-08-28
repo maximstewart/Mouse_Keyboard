@@ -36,6 +36,10 @@ class ControlMixin:
 
         return False
 
+    def type_string(self, text):
+        for char in text:
+            pyautogui.typewrite(char)
+
 
 
 
