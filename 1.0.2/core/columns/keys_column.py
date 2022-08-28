@@ -7,7 +7,7 @@ from gi.repository import Gtk
 
 # Application imports
 from ..widgets.key import Key
-
+from .bottom_key_row import Bottom_Key_Row
 
 
 class KeyboardRowMatchError(Exception):
@@ -45,16 +45,15 @@ class Keys_Column(Gtk.Box):
 
             row_box = self.add_row()
             if len(pKeys) == len(sKeys):
-                for i in range(9):
+                for i in range(10):
                     pkey = pKeys[i]
                     sKey = sKeys[i]
                     row_box.add(Key(pkey, sKey))
             else:
                 raise KeyboardRowMatchError("A row in keys_json has missmatched pKeys and sKeys lengths.")
 
-        row_box = self.add_row()
-        for key in ['Symbols', 'Space', 'Backspace']:
-            row_box.add(Key(key, key))
+        self.add(Bottom_Key_Row())
+
 
     def add_row(self):
         row_box = Gtk.Box()

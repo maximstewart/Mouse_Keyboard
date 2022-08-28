@@ -17,9 +17,27 @@ class ControlMixin:
     def type(self, key):
         pyautogui.typewrite(key)
 
-
     def enter(self, widget = None, data = None):
         pyautogui.press("enter")
+
+    def backspace(self, widget = None, data=None):
+        pyautogui.press("backspace")
+
+    def press_special_keys(self, key):
+        if key in ["Backspace", "Enter", "Esc", "Tab", "Space", "Del", "Up", "Down", "Left", "Right", "PrtSc"]:
+            pyautogui.press(key.lower())
+            return True
+
+        for i in range(1, 13):
+            fkey = 'F' + str(i)
+            if key == fkey:
+                pyautogui.press(key.lower())
+                return True
+
+        return False
+
+
+
 
 
     # def typeString(self, widget = None, data = None):
