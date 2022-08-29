@@ -26,11 +26,14 @@ class List_Box(Gtk.ScrolledWindow):
     def __init__(self):
         super(List_Box, self).__init__()
 
+        self.setup_styling()
         tree, store = self.create_treeview()
 
         self.add(tree)
         self.set_size_request(360, 240)
 
+    def setup_styling(self):
+        self.set_vexpand(True)
 
     def create_treeview(self):
         tree   = Gtk.TreeView()
@@ -76,7 +79,6 @@ class Grid_Box(Gtk.Grid):
         self.attach(Right_Key(), 2, 1, 1, 1)
 
     def setup_styling(self):
-        self.set_hexpand(True)
         self.set_margin_top(5)
         self.set_margin_bottom(5)
         self.set_column_homogeneous(True)
