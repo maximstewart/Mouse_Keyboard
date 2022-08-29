@@ -15,16 +15,31 @@ from .container import Container
 
 
 
+class MissingConfigError(Exception):
+    pass
+
+
 class Window(SignalsMixin, Gtk.ApplicationWindow):
     """docstring for Window."""
 
     def __init__(self, args, unknownargs):
         super(Window, self).__init__()
 
-        self._SCRIPT_PTH = os.path.dirname(os.path.realpath(__file__))
-        self._ICON_FILE  = f"{self._SCRIPT_PTH}/../resources/icon.png"
-        self._CSS_FILE   = f"{self._SCRIPT_PTH}/../resources/stylesheet.css"
+        self._USER_HOME     = os.path.expanduser('~')
+        self._USR_PATH      = f"/usr/share/{app_name.lower()}"
+        self._CONFIG_PATH   = f"{self._USER_HOME}/.config/{app_name.lower()}"
+        self._ICON_FILE     = f"{self._CONFIG_PATH}/icon.png"
+        self._CSS_FILE      = f"{self._CONFIG_PATH}/stylesheet.css"
 
+        if not os.path.exists(self._ICON_FILE):
+            self._ICON_FILE  = f"{self._USR_PATH}/icon.png"
+            if not os.path.exists(self._ICON_FILE):
+                raise MissingConfigError("Unable to find the application icon.")
+
+        if not os.path.exists(self._ICON_FILE):
+            self._CSS_FILE   = f"{self._USR_PATH}/stylesheet.css"
+            if not os.path.exists(self._ICON_FILE):
+                raise MissingConfigError("Unable to find the stylesheet.")
 
         self.setup_win_settings()
         self.setup_styling()
