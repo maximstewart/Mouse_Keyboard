@@ -8,7 +8,7 @@ from gi.repository import Gtk
 # Application imports
 
 
-class Key(Gtk.Button):
+class Key(Gtk.Button or Gtk.ToggleButton):
     def __init__(self, primary = "NULL", secondary = "NULL"):
         super(Key, self).__init__()
 
@@ -31,7 +31,12 @@ class Key(Gtk.Button):
         typwriter.type(key)
 
     def _do_press_special_key(self, widget = None):
-        typwriter.press_special_keys(self.get_label())
+        key = self.get_label()
+        if key in ["Ctrl", "Shift", "Alt"]:
+            ctx = widget.get_style_context()
+            ctx.remove_class("toggled_bttn") if ctx.has_class("toggled_bttn") else ctx.add_class("toggled_bttn")
+
+        typwriter.press_special_keys(key)
 
     def toggle_symbol_keys(self, widget = None, eve = None):
         self._is_symbol = not self._is_symbol

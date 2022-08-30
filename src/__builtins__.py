@@ -8,6 +8,7 @@ from utils.pyautogui_control import ControlMixin
 
 
 
+
 # NOTE: Threads WILL NOT die with parent's destruction.
 def threaded_wrapper(fn):
     def wrapper(*args, **kwargs):
@@ -37,9 +38,13 @@ class EndpointRegistry():
     def get_endpoints(self):
         return self._endpoints
 
+
 class Pyautogui_Controller(ControlMixin):
     def __init__(self):
-        pass
+        self.isCtrlOn       = False
+        self.isShiftOn      = False
+        self.isAltOn        = False
+
 
 
 
@@ -63,6 +68,7 @@ keys_json = {
         },
     }
 }
+
 
 
 

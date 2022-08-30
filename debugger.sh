@@ -13,6 +13,6 @@ function main() {
     echo "Working Dir: " $(pwd)
 
     source '/home/abaddon/Portable_Apps/py-venvs/gtk-apps-venv/venv/bin/activate'
-    python -m pudb $(pwd)/__main__.py; bash
+    python -m pudb $(pwd)/src/__main__.py; bash
 }
 main "$@";

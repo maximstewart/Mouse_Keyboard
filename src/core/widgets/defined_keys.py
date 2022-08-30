@@ -11,12 +11,11 @@ from .key import Key
 
 
 
-############################  Left_Column Keys ############################
+##############################  Left_Column Keys  ##############################
 
 class Symbols_Key(Key):
     def __init__(self):
         super(Symbols_Key, self).__init__("Symbols", "Symbols")
-
 
     def setup_signals(self):
         self.connect("released", self._clicked)
@@ -28,28 +27,30 @@ class Symbols_Key(Key):
             for key in row:
                 key.emit("toggle-symbol-keys", ())
 
-class CAPS_Key(Gtk.ToggleButton):
+class CAPS_Key(Key):
     def __init__(self):
         super(CAPS_Key, self).__init__("Caps", "Caps")
 
-        self.set_vexpand(True)
-
-        self.setup_signals()
+        self.setup_styling()
         self.show_all()
 
+    def setup_styling(self):
+        self.set_vexpand(True)
 
     def setup_signals(self):
-        self.connect("clicked", self._clicked)
+        self.connect("released", self._clicked)
 
     def _clicked(self, widget = None):
-        key_columns = self.get_parent().get_parent().get_children()[1]
+        ctx = widget.get_style_context()
+        ctx.remove_class("toggled_bttn") if ctx.has_class("toggled_bttn") else ctx.add_class("toggled_bttn")
 
+        key_columns = self.get_parent().get_parent().get_children()[1]
         for row in key_columns.get_children():
             for key in row:
                 key.emit("toggle-caps", ())
 
 
-############################  Right_Column Keys ############################
+##############################  Right_Column Keys  ##############################
 
 class Backspace_Key(Key):
     def __init__(self):
@@ -64,20 +65,16 @@ class Backspace_Key(Key):
 class Enter_Key(Key):
     def __init__(self):
         super(Enter_Key, self).__init__("Enter", "Enter")
-
         self.setup_styling()
 
     def setup_styling(self):
         self.set_vexpand(True)
 
     def setup_signals(self):
-        self.connect("released", self._clicked)
-
-    def _clicked(self, widget = None):
-        typwriter.press_special_keys(self.get_label())
+        self.connect("released", self._do_press_special_key)
 
 
-############################  Bottom_Key_Row Keys ############################
+#############################  Bottom_Key_Row Keys  #############################
 
 class AT_Key(Key):
     def __init__(self):
@@ -96,7 +93,7 @@ class COM_Key(Key):
         super(COM_Key, self).__init__(".com", ".com")
 
 
-############################  Controls_Column Keys ############################
+############################  Controls_Column Keys  ############################
 
 class Esc_Key(Key):
     def __init__(self):
@@ -105,14 +102,12 @@ class Esc_Key(Key):
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
-
 class Del_Key(Key):
     def __init__(self):
         super(Del_Key, self).__init__("Del", "Del")
 
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
-
 
 class Ctrl_Key(Key):
     def __init__(self):
@@ -121,14 +116,12 @@ class Ctrl_Key(Key):
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
-
 class Shift_Key(Key):
     def __init__(self):
         super(Shift_Key, self).__init__("Shift", "Shift")
 
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
-
 
 class Alt_Key(Key):
     def __init__(self):
@@ -137,14 +130,12 @@ class Alt_Key(Key):
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
-
 class PrtSc_Key(Key):
     def __init__(self):
         super(PrtSc_Key, self).__init__("PrtSc", "PrtSc")
 
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
-
 
 class Up_Key(Key):
     def __init__(self):
