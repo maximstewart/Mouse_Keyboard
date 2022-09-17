@@ -6,7 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from ..widgets.defined_keys import Backspace_Key, Enter_Key
+from ..widgets.defined_keys import Emoji_Keys, Backspace_Key, Enter_Key
 
 
 
@@ -19,7 +19,7 @@ class Right_Column(Gtk.Box):
 
         self.setup_styling()
 
-        for key in [Backspace_Key(), Enter_Key()]:
+        for key in [Emoji_Keys(), Backspace_Key(), Enter_Key()]:
             self.add(key)
 
         self.show_all()

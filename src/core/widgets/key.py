@@ -9,13 +9,15 @@ from gi.repository import Gtk
 
 
 class Key(Gtk.Button or Gtk.ToggleButton):
-    def __init__(self, primary = "NULL", secondary = "NULL"):
+    def __init__(self, primary = "NULL", secondary = "NULL", emoji = "NULL"):
         super(Key, self).__init__()
 
         self._primary_symbol   = primary
         self._secondary_symbol = secondary
+        self._emoji_symbol     = emoji
         self._is_upper         = False
         self._is_symbol        = False
+        self._is_emoji         = False
 
         self.set_label(self._primary_symbol)
         self.setup_signals()
@@ -25,6 +27,7 @@ class Key(Gtk.Button or Gtk.ToggleButton):
         self.connect("released", self._do_type)
         self.connect("toggle-caps", self.toggle_caps)
         self.connect("toggle-symbol-keys", self.toggle_symbol_keys)
+        self.connect("toggle-emoji-keys", self.toggle_emoji_keys)
 
     def _do_type(self, widget = None):
         key = self.get_label().strip()
@@ -41,6 +44,18 @@ class Key(Gtk.Button or Gtk.ToggleButton):
     def toggle_symbol_keys(self, widget = None, eve = None):
         self._is_symbol = not self._is_symbol
         if self._is_symbol:
+            self.set_label(self._secondary_symbol)
+        elif self._is_emoji:
+            self.set_label(self._emoji_symbol)
+        else:
+            self.set_label(self._primary_symbol.upper()) if self._is_upper else self.set_label(self._primary_symbol.lower())
+
+    # NOTE: Might use name attrib on widgets and de-duplicate this and the above logic.
+    def toggle_emoji_keys(self, widget = None, eve = None):
+        self._is_emoji = not self._is_emoji
+        if self._is_emoji:
+            self.set_label(self._emoji_symbol)
+        elif self._is_symbol:
             self.set_label(self._secondary_symbol)
         else:
             self.set_label(self._primary_symbol.upper()) if self._is_upper else self.set_label(self._primary_symbol.lower())

@@ -38,15 +38,17 @@ class Keys_Column(Gtk.Box):
         for child in children:
             pKeys = keys[child]["pKeys"]
             sKeys = keys[child]["sKeys"]
+            eKeys = keys[child]["eKeys"]
 
             row_box = self.add_row()
-            if len(pKeys) == len(sKeys):
+            if len(pKeys) == len(sKeys) and len(pKeys) == len(eKeys):
                 for i in range(10):
                     pkey = pKeys[i]
                     sKey = sKeys[i]
-                    row_box.add(Key(pkey, sKey))
+                    eKey = eKeys[i]
+                    row_box.add(Key(pkey, sKey, eKey))
             else:
-                raise KeyboardRowMatchError("A row in keys_json has missmatched pKeys and sKeys lengths.")
+                raise KeyboardRowMatchError("A row in keys_json has missmatched pKeys, sKeys, or eKeys lengths.")
 
         self.add(Bottom_Key_Row())
 
