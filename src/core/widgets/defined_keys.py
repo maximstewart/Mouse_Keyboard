@@ -13,6 +13,13 @@ from .key import Key
 
 ##############################  Left_Column Keys  ##############################
 
+class Esc_Key(Key):
+    def __init__(self):
+        super(Esc_Key, self).__init__("Esc", "Esc")
+
+    def setup_signals(self):
+        self.connect("released", self._do_press_special_key)
+
 class Symbols_Key(Key):
     def __init__(self):
         super(Symbols_Key, self).__init__("Symbols", "Symbols")
@@ -76,10 +83,12 @@ class Enter_Key(Key):
 
 #############################  Bottom_Key_Row Keys  #############################
 
-class AT_Key(Key):
+class Esc_Key(Key):
     def __init__(self):
-        super(AT_Key, self).__init__("@", "@")
+        super(Esc_Key, self).__init__("Esc", "Esc")
 
+    def setup_signals(self):
+        self.connect("released", self._do_press_special_key)
 
 class Space_Key(Key):
     def __init__(self):
@@ -88,6 +97,10 @@ class Space_Key(Key):
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
+class AT_Key(Key):
+    def __init__(self):
+        super(AT_Key, self).__init__("@", "@")
+
 class COM_Key(Key):
     def __init__(self):
         super(COM_Key, self).__init__(".com", ".com")
@@ -95,9 +108,9 @@ class COM_Key(Key):
 
 ############################  Controls_Column Keys  ############################
 
-class Esc_Key(Key):
+class Tab_Key(Key):
     def __init__(self):
-        super(Esc_Key, self).__init__("Esc", "Esc")
+        super(Tab_Key, self).__init__("Tab", "Tab")
 
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)

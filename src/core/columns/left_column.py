@@ -6,7 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from ..widgets.defined_keys import Symbols_Key, CAPS_Key
+from ..widgets.defined_keys import Esc_Key, Symbols_Key, CAPS_Key
 
 
 
@@ -19,7 +19,7 @@ class Left_Column(Gtk.Box):
 
         self.setup_styling()
 
-        for key in [Symbols_Key(), CAPS_Key()]:
+        for key in [Symbols_Key(), Esc_Key(), CAPS_Key()]:
             self.add(key)
 
         self.show_all()

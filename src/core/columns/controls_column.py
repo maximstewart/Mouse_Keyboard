@@ -6,7 +6,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from ..widgets.defined_keys import Del_Key, Ctrl_Key, Shift_Key, Alt_Key, PrtSc_Key, Up_Key, Down_Key, Left_Key, Right_Key
+from ..widgets.defined_keys import Tab_Key, Del_Key, Ctrl_Key, Shift_Key, Alt_Key, PrtSc_Key, Up_Key, Down_Key, Left_Key, Right_Key
 
 
 
@@ -17,7 +17,7 @@ class Button_Box(Gtk.ButtonBox):
     def __init__(self):
         super(Button_Box, self).__init__()
 
-        for key in [Del_Key(), Ctrl_Key(), Shift_Key(), Alt_Key(), PrtSc_Key()]:
+        for key in [Tab_Key(), Del_Key(), Ctrl_Key(), Shift_Key(), Alt_Key(), PrtSc_Key()]:
             self.add(key)
 
 class List_Box(Gtk.ScrolledWindow):
