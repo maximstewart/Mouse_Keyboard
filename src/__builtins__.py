@@ -5,7 +5,8 @@ import builtins, threading
 
 # Application imports
 from utils.pyautogui_control import ControlMixin
-
+from utils.endpoint_registry import EndpointRegistry
+from utils.event_system import EventSystem
 
 
 
@@ -22,21 +23,6 @@ def daemon_threaded_wrapper(fn):
     return wrapper
 
 
-
-
-class EndpointRegistry():
-    def __init__(self):
-        self._endpoints = {}
-
-    def register(self, rule, **options):
-        def decorator(f):
-            self._endpoints[rule] = f
-            return f
-
-        return decorator
-
-    def get_endpoints(self):
-        return self._endpoints
 
 
 class Pyautogui_Controller(ControlMixin):
@@ -57,17 +43,17 @@ keys_json = {
         },
         "row2": {
             "pKeys": ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-            "sKeys": ['\\', '^', '#', '$', '%', '&', '-', '_', '<', '>'],
+            "sKeys": ['\\', '^', '#', '$', '%', '&', '-', '_', '"', '*'],
             "eKeys": ['', '', '', '', '', '', '', '', '', '']
         },
         "row3": {
             "pKeys": ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', "'"],
-            "sKeys": ['\\', '/', '|', ':', '=', '+', '"', '*', ';', '!'],
+            "sKeys": ['/', '|', ':', '=', '+', '', '', '', ';', '!'],
             "eKeys": ['', '', '', '', '', '', '', '', '', '']
         },
         "row4": {
             "pKeys": ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?'],
-            "sKeys": ['`', '', '', '', '[', ']', '(', ')', '{', '}'],
+            "sKeys": ['', '', '<', '>', '[', ']', '(', ')', '{', '}'],
             "eKeys": ['', '', '', '', '', '', '', '', '', '']
         },
     }
@@ -79,11 +65,12 @@ keys_json = {
 # NOTE: Just reminding myself we can add to builtins two different ways...
 # __builtins__.update({"event_system": Builtins()})
 builtins.app_name          = "Mouse Keyboard"
-builtins.endpoint_registry = EndpointRegistry()
-builtins.typwriter         = Pyautogui_Controller()
 builtins.threaded          = threaded_wrapper
 builtins.daemon_threaded   = daemon_threaded_wrapper
 builtins.keys_set          = keys_json
 builtins.trace_debug       = False
 builtins.debug             = False
 builtins.app_settings      = None
+builtins.endpoint_registry = EndpointRegistry()
+builtins.event_system      = EventSystem()
+builtins.typwriter         = Pyautogui_Controller()
