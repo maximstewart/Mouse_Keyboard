@@ -6,7 +6,16 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from ..widgets.defined_keys import Tab_Key, Del_Key, Ctrl_Key, Shift_Key, Alt_Key, PrtSc_Key, Up_Key, Down_Key, Left_Key, Right_Key
+from ..widgets.defined_keys import Tab_Key
+from ..widgets.defined_keys import Del_Key
+from ..widgets.defined_keys import Ctrl_Key
+from ..widgets.defined_keys import Shift_Key
+from ..widgets.defined_keys import Alt_Key
+from ..widgets.defined_keys import PrtSc_Key
+from ..widgets.defined_keys import Up_Key
+from ..widgets.defined_keys import Down_Key
+from ..widgets.defined_keys import Left_Key
+from ..widgets.defined_keys import Right_Key
 
 
 
@@ -19,6 +28,7 @@ class Button_Box(Gtk.ButtonBox):
 
         for key in [Tab_Key(), Del_Key(), Ctrl_Key(), Shift_Key(), Alt_Key(), PrtSc_Key()]:
             self.add(key)
+
 
 class List_Box(Gtk.ScrolledWindow):
     """docstring for List_Box."""
@@ -56,6 +66,7 @@ class List_Box(Gtk.ScrolledWindow):
 
         tree.columns_autosize()
         return tree, store
+
 
 class Grid_Box(Gtk.Grid):
     """docstring for Grid_Box."""

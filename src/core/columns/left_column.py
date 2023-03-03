@@ -6,7 +6,9 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from ..widgets.defined_keys import Esc_Key, Symbols_Key, CAPS_Key
+from ..widgets.defined_keys import Esc_Key
+from ..widgets.defined_keys import Symbols_Key
+from ..widgets.defined_keys import CAPS_Key
 
 
 

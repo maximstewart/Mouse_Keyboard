@@ -6,7 +6,10 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from .columns import Left_Column, Keys_Column, Right_Column, Controls_Column
+from .columns import Left_Column
+from .columns import Keys_Column
+from .columns import Right_Column
+from .columns import Controls_Column
 
 
 
@@ -23,7 +26,6 @@ class Auto_Type(Gtk.Box):
         self._type_btn   = Gtk.Button(label="Type")
 
         self._auto_typer.set_placeholder_text("Autotype Field...")
-        # self._auto_typer.set_icon_from_icon_name(0, "gtk-go-forward") # PRIMARY = 0, SECONDARY = 1
         self._auto_typer.set_icon_from_stock(0, "gtk-go-forward") # PRIMARY = 0, SECONDARY = 1
         self._auto_typer.set_can_focus(True)
         self._auto_typer.set_hexpand(True)
@@ -51,6 +53,7 @@ class Auto_Type(Gtk.Box):
         text = self._auto_typer.get_text()
         typwriter.type_string(text)
 
+
 class Main_Container(Gtk.Box):
     """docstring for Main_Container."""
 
@@ -72,6 +75,7 @@ class Main_Container(Gtk.Box):
         self.add(Keys_Column())
         self.add(Right_Column())
         self.add(Controls_Column())
+
 
 class Container(Gtk.Box):
     """docstring for Container."""

@@ -2,7 +2,9 @@
 
 
 # Python imports
-import argparse, faulthandler, traceback
+import argparse
+import faulthandler
+import traceback
 from setproctitle import setproctitle
 
 import tracemalloc
@@ -16,6 +18,7 @@ from gi.repository import Gtk
 
 # Application imports
 from app import Application
+
 
 
 if __name__ == "__main__":
