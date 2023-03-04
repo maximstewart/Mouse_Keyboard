@@ -63,21 +63,25 @@ class Backspace_Key(Key):
     def _clicked(self, widget = None):
         typwriter.press_special_keys(self.get_label())
 
-class Emoji_Keys(Key):
-    def __init__(self):
-        super(Emoji_Keys, self).__init__("Emoji", "Emoji", iscontrol=True)
+class Emoji_Key(Key):
+    def __init__(self, emoji_popover):
+        super(Emoji_Key, self).__init__("Emoji", "Emoji", iscontrol=True)
+
+        self._ctx           = self.get_style_context()
+        self._emoji_popover = emoji_popover
 
     def setup_signals(self):
         self.connect("released", self._clicked)
 
     def _clicked(self, widget = None):
-        ctx = widget.get_style_context()
-        ctx.remove_class("toggled_bttn") if ctx.has_class("toggled_bttn") else ctx.add_class("toggled_bttn")
+        self._ctx.add_class("toggled_bttn")
+        self._emoji_popover.popup()
 
-        key_columns = self.get_parent().get_parent().get_children()[1]
-        for row in key_columns.get_children():
-            for key in row:
-                key.emit("toggle-emoji-keys", ())
+    def unset_selected(self, widget = None):
+        self._ctx.remove_class("toggled_bttn")
+
+
+
 
 class Enter_Key(Key):
     def __init__(self):

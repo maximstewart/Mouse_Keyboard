@@ -6,9 +6,11 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 # Application imports
-from ..widgets.defined_keys import Emoji_Keys
+from ..widgets.emoji_popover import Emoji_Popover
+from ..widgets.defined_keys import Emoji_Key
 from ..widgets.defined_keys import Backspace_Key
 from ..widgets.defined_keys import Enter_Key
+
 
 
 
@@ -20,7 +22,14 @@ class Right_Column(Gtk.Box):
 
         self.setup_styling()
 
-        for key in [Emoji_Keys(), Backspace_Key(), Enter_Key()]:
+        emoji_popover = Emoji_Popover()
+        emoji_key     = Emoji_Key(emoji_popover)
+
+        emoji_popover.set_parent_key(emoji_key)
+        emoji_popover.set_relative_to(emoji_key)
+        emoji_popover.set_constrain_to(0)  # LEFT = 0, RIGHT = 1, TOP = 2, BOTTOM = 3
+
+        for key in [emoji_key, Backspace_Key(), Enter_Key()]:
             self.add(key)
 
         self.show_all()

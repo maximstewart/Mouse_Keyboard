@@ -1,5 +1,9 @@
-# Mouse_Keyboard
+# Mouse-Keyboard
 An onscreen keyboard for the mouse.
+
+### Requirements
+* PyGObject
+* python-xlib
 
 # TODO
 <li>Get save and execute of custom commands working.</li>

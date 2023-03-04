@@ -1,7 +1,16 @@
 # Python imports
-import pyautogui
+import subprocess
 
-# Gtk imports
+# Lib imports
+# NOTE: Source:  https://github.com/asweigart/pyautogui
+#     Gunna try importing an env pyautogui; but, If none exist we will use the internal one
+#     modified to import itself properly for Linux systems.
+try:
+    import pyautogui
+    print("Found system/env pyautogui instance...")
+except Exception as e:
+    print("Defering to internal pyautogui instance...")
+    from . import pyautogui
 
 # Application imports
 
@@ -13,6 +22,18 @@ pyautogui.PAUSE            = 0
 
 
 class ControlMixin:
+
+    def get_clipboard_data(self, encoding="utf-8") -> str:
+        proc    = subprocess.Popen(get_clipboard, stdout=subprocess.PIPE)
+        retcode = proc.wait()
+        data    = proc.stdout.read()
+        return data.decode(encoding).strip()
+
+    def set_clipboard_data(self, data: type, encoding="utf-8") -> None:
+        proc = subprocess.Popen(set_clipboard, stdin=subprocess.PIPE)
+        proc.stdin.write(data.encode(encoding))
+        proc.stdin.close()
+        retcode = proc.wait()
 
     def type(self, key):
         if self.isCtrlOn or self.isShiftOn or self.isAltOn:

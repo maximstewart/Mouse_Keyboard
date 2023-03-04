@@ -7,7 +7,7 @@ from gi.repository import Gtk
 
 # Application imports
 from ..widgets.defined_keys import Esc_Key
-from ..widgets.defined_keys import Symbols_Key
+from ..widgets.defined_keys import Tab_Key
 from ..widgets.defined_keys import CAPS_Key
 
 
@@ -21,7 +21,7 @@ class Left_Column(Gtk.Box):
 
         self.setup_styling()
 
-        for key in [Symbols_Key(), Esc_Key(), CAPS_Key()]:
+        for key in [Tab_Key(), Esc_Key(), CAPS_Key()]:
             self.add(key)
 
         self.show_all()

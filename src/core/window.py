@@ -16,31 +16,12 @@ from .container import Container
 
 
 
-class MissingConfigError(Exception):
-    pass
-
 
 class Window(SignalsMixin, Gtk.ApplicationWindow):
     """docstring for Window."""
 
     def __init__(self, args, unknownargs):
         super(Window, self).__init__()
-
-        self._USER_HOME     = os.path.expanduser('~')
-        self._USR_PATH      = f"/usr/share/{app_name.lower()}"
-        self._CONFIG_PATH   = f"{self._USER_HOME}/.config/{app_name.lower()}"
-        self._ICON_FILE     = f"{self._CONFIG_PATH}/icon.png"
-        self._CSS_FILE      = f"{self._CONFIG_PATH}/stylesheet.css"
-
-        if not os.path.exists(self._ICON_FILE):
-            self._ICON_FILE  = f"{self._USR_PATH}/icon.png"
-            if not os.path.exists(self._ICON_FILE):
-                raise MissingConfigError("Unable to find the application icon.")
-
-        if not os.path.exists(self._ICON_FILE):
-            self._CSS_FILE   = f"{self._USR_PATH}/stylesheet.css"
-            if not os.path.exists(self._ICON_FILE):
-                raise MissingConfigError("Unable to find the stylesheet.")
 
         self.setup_win_settings()
         self.setup_styling()
@@ -50,12 +31,11 @@ class Window(SignalsMixin, Gtk.ApplicationWindow):
 
         self.show_all()
 
-
     def setup_signals(self):
         self.connect("delete-event", Gtk.main_quit)
 
     def setup_win_settings(self):
-        self.set_icon_from_file(self._ICON_FILE)
+        self.set_icon_from_file(ICON_FILE)
         self.set_title(app_name)
         self.set_default_size(800, 200)
         self.set_keep_above(True)
@@ -77,7 +57,7 @@ class Window(SignalsMixin, Gtk.ApplicationWindow):
             self.connect("draw", self._area_draw)
 
         css_provider  = Gtk.CssProvider()
-        css_provider.load_from_path(self._CSS_FILE)
+        css_provider.load_from_path(CSS_FILE)
         screen        = Gdk.Screen.get_default()
         style_context = Gtk.StyleContext()
         style_context.add_provider_for_screen(screen, css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)

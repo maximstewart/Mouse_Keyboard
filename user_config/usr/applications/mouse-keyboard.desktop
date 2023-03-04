@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Mouse-Board
+GenericName=Mouse Keyboard
+Comment=A Python and Gtk+ mouse based keyboard.
+Exec=/bin/mouse-keyboard %F
+Icon=/usr/share/mouse-keyboard/icons/mouse-keyboard.png
+Type=Application
+StartupNotify=true
+Categories=System;FileTools;Utility;Core
+MimeType=
+Terminal=false
