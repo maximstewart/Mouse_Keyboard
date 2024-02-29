@@ -27,22 +27,22 @@ class Window(SignalsMixin, Gtk.ApplicationWindow):
         self.setup_styling()
         self.setup_signals()
         self.setup_custom_event_signals()
+        self.add_custom_signals()
         self.add(Container())
 
         self.show_all()
 
     def setup_signals(self):
-        self.connect("delete-event", Gtk.main_quit)
+        self.connect("delete-event", self._tear_down)
 
     def setup_win_settings(self):
         self.set_icon_from_file(ICON_FILE)
         self.set_title(app_name)
         self.set_default_size(800, 200)
         self.set_keep_above(True)
-        self.set_accept_focus(False)
         self.set_skip_taskbar_hint(True)
         self.set_skip_pager_hint(True)
-        self.set_type_hint(3) # 3 = TOOLBAR
+        self.unset_focusable()
         self.set_gravity(8)   # 5 = CENTER, 8 = SOUTH
         self.set_position(1)  # 1 = CENTER, 4 = CENTER_ALWAYS
         self.stick()
@@ -68,5 +68,21 @@ class Window(SignalsMixin, Gtk.ApplicationWindow):
         cr.paint()
         cr.set_operator(cairo.OPERATOR_OVER)
 
+    def add_custom_signals(self):
+        event_system.subscribe("unset_focusable", self.unset_focusable)
+        event_system.subscribe("set_focusable", self.set_focusable)
+
+    def unset_focusable(self):
+        self.set_accept_focus(False)
+
+    def set_focusable(self):
+        self.set_accept_focus(True)
+        self.set_focus(None)
+
     def main(self):
         Gtk.main()
+
+    def _tear_down(self, widget = None, eve = None):
+        event_system.emit("shutting-down")
+        Gtk.main_quit()
+

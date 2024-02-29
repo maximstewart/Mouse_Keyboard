@@ -23,7 +23,7 @@ class Auto_Type(Gtk.Box):
         pad1             = Gtk.Label()
         pad2             = Gtk.Label()
         self._auto_typer = Gtk.SearchEntry()
-        self._type_btn   = Gtk.Button(label="Type")
+        self._type_btn   = Gtk.Button(label = "Type")
 
         self._auto_typer.set_placeholder_text("Autotype Field...")
         self._auto_typer.set_icon_from_stock(0, "gtk-go-forward") # PRIMARY = 0, SECONDARY = 1
@@ -47,7 +47,19 @@ class Auto_Type(Gtk.Box):
         self.set_margin_bottom(5)
 
     def setup_signals(self):
+        self._auto_typer.connect("enter-notify-event", self.focus_entry)
+        self._auto_typer.connect("leave-notify-event", self.unfocus_entry)
         self._type_btn.connect("released", self.type_out)
+
+    def focus_entry(self, widget, eve = None):
+        event_system.emit("set_focusable")
+        widget = self.get_children()[1]
+        widget.grab_focus()
+
+    def unfocus_entry(self, widget, eve = None):
+        widget = self.get_children()[1]
+        widget.grab_remove()
+        event_system.emit("unset_focusable")
 
     def type_out(self, widget = None, eve = None):
         text = self._auto_typer.get_text()
