@@ -67,3 +67,6 @@ class Window(SignalsMixin, Gtk.ApplicationWindow):
         cr.set_operator(cairo.OPERATOR_SOURCE)
         cr.paint()
         cr.set_operator(cairo.OPERATOR_OVER)
+
+    def main(self):
+        Gtk.main()

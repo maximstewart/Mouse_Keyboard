@@ -6,9 +6,9 @@ import threading
 # Lib imports
 
 # Application imports
-from utils.pyautogui_control import ControlMixin
-from utils.endpoint_registry import EndpointRegistry
-from utils.event_system import EventSystem
+from libs.pyautogui_control import ControlMixin
+from libs.endpoint_registry import EndpointRegistry
+from libs.event_system import EventSystem
 
 
 

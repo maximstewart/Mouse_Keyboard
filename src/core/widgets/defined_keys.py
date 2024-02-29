@@ -15,26 +15,14 @@ from .key import Key
 
 class Esc_Key(Key):
     def __init__(self):
-        super(Esc_Key, self).__init__("Esc", "Esc", iscontrol=True)
+        super(Esc_Key, self).__init__("Esc", "Esc", iscontrol = True)
 
     def setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
-class Symbols_Key(Key):
-    def __init__(self):
-        super(Symbols_Key, self).__init__("Symbols", "Symbols", iscontrol=True)
-
-    def setup_signals(self):
-        self.connect("released", self._clicked)
-
-    def _clicked(self, widget = None):
-        ctx = widget.get_style_context()
-        ctx.remove_class("toggled_bttn") if ctx.has_class("toggled_bttn") else ctx.add_class("toggled_bttn")
-        event_system.emit("toggle_symbol_keys")
-
 class CAPS_Key(Key):
     def __init__(self):
-        super(CAPS_Key, self).__init__("Caps", "Caps", iscontrol=True)
+        super(CAPS_Key, self).__init__("Caps", "Caps", iscontrol = True)
 
         self.setup_styling()
         self.show_all()
@@ -80,8 +68,26 @@ class Emoji_Key(Key):
     def unset_selected(self, widget = None):
         self._ctx.remove_class("toggled_bttn")
 
+class Symbols_Key(Key):
+    def __init__(self):
+        super(Symbols_Key, self).__init__("Symbols", "Symbols", iscontrol = True)
+        self.setup_custom_signals()
 
+    def setup_signals(self):
+        self.connect("released", self._clicked)
 
+    def setup_custom_signals(self):
+        event_system.subscribe("is_symbols_enabled", self.is_symbols_enabled)
+        event_system.subscribe("toggle_symbol_keys", self.toggle_symbol_keys)
+
+    def _clicked(self, widget = None):
+        ctx = widget.get_style_context()
+        ctx.remove_class("toggled_bttn") if ctx.has_class("toggled_bttn") else ctx.add_class("toggled_bttn")
+        event_system.emit("toggle_symbol_keys")
+
+    def is_symbols_enabled(self):
+        ctx = self.get_style_context()
+        return True if ctx.has_class("toggled_bttn") else False
 
 class Enter_Key(Key):
     def __init__(self):

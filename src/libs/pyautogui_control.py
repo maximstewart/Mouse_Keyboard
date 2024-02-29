@@ -48,7 +48,7 @@ class ControlMixin:
     def enter(self, widget = None, data = None):
         pyautogui.press("enter")
 
-    def backspace(self, widget = None, data=None):
+    def backspace(self, widget = None, data = None):
         pyautogui.press("backspace")
 
     def press_special_keys(self, key):

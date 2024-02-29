@@ -21,6 +21,8 @@ class Keys_Column(Gtk.Box):
         super(Keys_Column, self).__init__()
 
         self.setup_styling()
+        self.setup_signals()
+        self.setup_custom_signals()
         self.setup_key_buttons()
 
         self.show_all()
@@ -30,6 +32,16 @@ class Keys_Column(Gtk.Box):
         self.set_orientation(1)  # HORIZONTAL = 0, VERTICAL = 1
         self.set_property("homogeneous", True)
         self.set_hexpand(True)
+
+    def setup_signals(self):
+        self.connect("button-release-event", self._on_button_release_event)
+
+    def setup_custom_signals(self):
+        event_system.subscribe("itterate_mode", self.itterate_mode)
+
+    def _on_button_release_event(self, widget = None, eve = None):
+        if eve.button == 3: # NOTE: right-click
+            event_system.emit_and_await("itterate_mode")
 
     def setup_key_buttons(self):
         keys = keys_set["keys"]
@@ -57,3 +69,15 @@ class Keys_Column(Gtk.Box):
         self.add(row_box)
 
         return row_box
+
+    def itterate_mode(self):
+        emoji_view_shown   = event_system.emit_and_await("is_emoji_view_shown")
+        is_symbols_enabled = event_system.emit_and_await("is_symbols_enabled")
+
+        if not is_symbols_enabled and not emoji_view_shown:
+            event_system.emit("toggle_symbol_keys")
+        elif is_symbols_enabled and not emoji_view_shown:
+            event_system.emit("show_emoji_view")
+        elif is_symbols_enabled and emoji_view_shown:
+            event_system.emit("hide_emoji_view")
+            event_system.emit("toggle_symbol_keys")

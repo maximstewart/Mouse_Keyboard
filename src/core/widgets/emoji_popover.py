@@ -49,12 +49,16 @@ class Emoji_Notebook(Gtk.Notebook):
         for group in emoji_grouping:
             tab_widget   = Gtk.Label(label=group)
             scroll, grid = self.create_scroll_and_grid()
+            self.append_page(scroll, tab_widget)
+            self.set_tab_reorderable(scroll, False)
+            self.set_tab_detachable(scroll, False)
 
             top  = 0
             left = 0
             for emoji in emoji_grouping[group]:
                 key = Key(emoji["emoji"], emoji["emoji"])
                 key._is_emoji = True
+                key.show()
                 grid.attach(key, left, top, width, height)
 
                 left += 1
@@ -62,9 +66,6 @@ class Emoji_Notebook(Gtk.Notebook):
                     left = 0
                     top += 1
 
-            self.append_page(scroll, tab_widget)
-            self.set_tab_reorderable(scroll, False)
-            self.set_tab_detachable(scroll, False)
 
     def create_scroll_and_grid(self):
         scroll = Gtk.ScrolledWindow()
@@ -83,8 +84,9 @@ class Emoji_Popover(Gtk.Popover):
 
         emoji_notebook = Emoji_Notebook()
         self.add(emoji_notebook)
-        self.set_default_widget(emoji_notebook)
         self.setup_styling()
+        self.setup_signals()
+        self.setup_custom_signals()
 
         self._emoji_key = None
 
@@ -94,8 +96,22 @@ class Emoji_Popover(Gtk.Popover):
         self.set_size_request(480, 280)
 
     def setup_signals(self):
-        self.connect("closed", self._emoji_key.unset_selected)
+        ...
+
+    def setup_custom_signals(self):
+        event_system.subscribe("is_emoji_view_shown", self.is_emoji_view_shown)
+        event_system.subscribe("show_emoji_view", self.show_emoji_view)
+        event_system.subscribe("hide_emoji_view", self.hide_emoji_view)
 
     def set_parent_key(self, emoji_key):
         self._emoji_key = emoji_key
         self.setup_signals()
+
+    def is_emoji_view_shown(self):
+        return self.is_visible()
+
+    def show_emoji_view(self):
+        self.popup()
+
+    def hide_emoji_view(self):
+        self.popdown()
