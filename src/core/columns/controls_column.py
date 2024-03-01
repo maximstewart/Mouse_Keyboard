@@ -52,9 +52,9 @@ class List_Box(Gtk.ScrolledWindow):
         event_system.subscribe("del_command", self.del_command)
 
     def add_widgets(self):
-        tree, self.store = self.create_treeview()
+        self.tree, self.store = self.create_treeview()
 
-        self.add(tree)
+        self.add(self.tree)
         self.set_size_request(360, 240)
 
     def create_treeview(self):
@@ -108,9 +108,19 @@ class List_Box(Gtk.ScrolledWindow):
             f.write( commands.strip() )
 
     def _row_activated(self, tree_view, path, column):
-        itr     = self.store.get_iter(path)
-        command = self.store.get_value(itr, 0)
-        typwriter.type(command)
+        itr         = self.store.get_iter(path)
+        command     = self.store.get_value(itr, 0)
+        use_special = False
+
+        for arg in LSIDE_KEYS + RSIDE_KEYS + FKEYS:
+            if arg in command:
+                use_special = True
+                break
+
+        if use_special:
+            self.handle_as_special(command)
+        else:
+            typwriter.type(command)
 
     def run_command(self):
         ...
@@ -119,7 +129,32 @@ class List_Box(Gtk.ScrolledWindow):
         self.store.append([command])
 
     def del_command(self):
-        ...
+        path, column = self.tree.get_cursor()
+
+        if not path or not column: return
+
+        model = self.tree.get_model()
+        itr   = model.get_iter(path)
+
+        if not itr: return
+
+        self.store.remove(itr)
+
+    def handle_as_special(self, command):
+        lside_count = []
+        rside_count = []
+
+        for arg in LSIDE_KEYS:
+            lside_count.append( command.count(arg) )
+
+        for arg in RSIDE_KEYS:
+            rside_count.append( command.count(arg) )
+
+        if not lside_count == rside_count:
+            logger.info("Special keys don't match in open/close count...")
+            return
+
+        typwriter.press_special_keys(command)
 
 
 class CommandEntry(Gtk.Box):
