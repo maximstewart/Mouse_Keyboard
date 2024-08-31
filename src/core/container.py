@@ -36,26 +36,10 @@ class Auto_Type(Gtk.Box):
         self._auto_typer  = Gtk.SearchEntry()
         self._type_btn    = Gtk.Button(label = "Type")
 
-        self._word_list   = Gtk.Box()
-        scrolled_win      = Gtk.ScrolledWindow()
-        viewport          = Gtk.Viewport()
-
-        viewport.add(self._word_list)
-        scrolled_win.add(viewport)
-        scrolled_win.show_all()
-
-        self._res_popover.set_size_request(200, 400)
-        self._res_popover.set_relative_to(self._auto_typer)
-        self._res_popover.set_modal(False)
-        self._res_popover.add(scrolled_win)
-        self._res_popover.set_default_widget(scrolled_win)
-
         self._auto_typer.set_placeholder_text("Autotype Field...")
         self._auto_typer.set_icon_from_stock(0, "gtk-go-forward") # PRIMARY = 0, SECONDARY = 1
         self._auto_typer.set_can_focus(True)
         self._auto_typer.set_hexpand(True)
-
-        self._word_list.set_orientation(Gtk.Orientation.VERTICAL)
 
         pad1.set_hexpand(True)
         pad2.set_hexpand(True)
@@ -65,12 +49,30 @@ class Auto_Type(Gtk.Box):
         self.add(self._type_btn)
         self.add(pad2)
 
-        if auto_completion:
-            self.setup_dictionary()
-
+        self.setup_auto_completion()
         self.setup_styling()
         self.setup_signals()
         self.show_all()
+
+    def setup_auto_completion(self):
+        if auto_completion:
+            self._word_list = Gtk.Box()
+            scrolled_win    = Gtk.ScrolledWindow()
+            viewport        = Gtk.Viewport()
+
+            viewport.add(self._word_list)
+            scrolled_win.add(viewport)
+            scrolled_win.show_all()
+
+            self._res_popover.set_size_request(200, 400)
+            self._res_popover.set_relative_to(self._auto_typer)
+            self._res_popover.set_modal(False)
+            self._res_popover.add(scrolled_win)
+            self._res_popover.set_default_widget(scrolled_win)
+
+            self._word_list.set_orientation(Gtk.Orientation.VERTICAL)
+
+            self.setup_dictionary()
 
     @daemon_threaded
     def setup_dictionary(self):
