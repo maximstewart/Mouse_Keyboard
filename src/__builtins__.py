@@ -85,8 +85,9 @@ _USR_PATH                  = f"/usr/share/{app_name.lower()}"
 _CONFIG_PATH               = f"{_USER_HOME}/.config/{app_name.lower()}"
 _ICON_FILE                 = f"{_CONFIG_PATH}/icons/{app_name.lower()}.png"
 _CSS_FILE                  = f"{_CONFIG_PATH}/stylesheet.css"
+_DICT_FILE                 = f"{_CONFIG_PATH}/edmt_dictionary.json"
 _EMOJI_FILE                = f"{_CONFIG_PATH}/emoji.json"
-_LOG_FILE                  = f"{_CONFIG_PATH}/application.log"
+_LOG_PATH                  = f"{_CONFIG_PATH}"
 ch_log_lvl: int            = 10
 fh_log_lvl: int            = 20
 
@@ -110,10 +111,11 @@ if not os.path.exists(_EMOJI_FILE):
 builtins.CONFIG_PATH = _CONFIG_PATH
 builtins.ICON_FILE   = _ICON_FILE
 builtins.CSS_FILE    = _CSS_FILE
+builtins.DICT_FILE   = _DICT_FILE
 builtins.EMOJI_FILE  = _EMOJI_FILE
 
 
-builtins.logger            = Logger(_LOG_FILE, ch_log_lvl, fh_log_lvl).get_logger()
+builtins.logger            = Logger(_LOG_PATH, ch_log_lvl, fh_log_lvl).get_logger()
 builtins.endpoint_registry = EndpointRegistry()
 builtins.event_system      = EventSystem()
 builtins.typwriter         = Pyautogui_Controller()
