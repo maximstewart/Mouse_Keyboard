@@ -34,9 +34,9 @@ class MissingConfigError(Exception):
 
 class Pyautogui_Controller(ControlMixin):
     def __init__(self):
-        self.isCtrlOn       = False
-        self.isShiftOn      = False
-        self.isAltOn        = False
+        self.isCtrlOn  = False
+        self.isShiftOn = False
+        self.isAltOn   = False
 
 
 
@@ -57,7 +57,7 @@ keys_json = {
         },
         "row4": {
             "pKeys": ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?'],
-            "sKeys": ['', '', '\\<', '>', '[', ']', '(', ')', '{', '}']
+            "sKeys": ['', '', '<|shift+,', '>', '[', ']', '(', ')', '{', '}']
         },
     }
 }

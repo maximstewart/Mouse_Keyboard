@@ -54,9 +54,9 @@ class Keys_Column(Gtk.Box):
             row_box = self.add_row()
             if len(pKeys) == len(sKeys):
                 for i in range(10):
-                    pkey = pKeys[i]
+                    pKey = pKeys[i]
                     sKey = sKeys[i]
-                    row_box.add(Key(pkey, sKey))
+                    row_box.add(Key(pKey, sKey))
             else:
                 raise KeyboardRowMatchError("A row in keys_json has missmatched pKeys to sKeys lengths.")
 

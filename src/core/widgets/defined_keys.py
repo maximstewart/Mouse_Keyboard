@@ -17,20 +17,20 @@ class Esc_Key(Key):
     def __init__(self):
         super(Esc_Key, self).__init__("Esc", "Esc", iscontrol = True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
 class CAPS_Key(Key):
     def __init__(self):
         super(CAPS_Key, self).__init__("Caps", "Caps", iscontrol = True)
 
-        self.setup_styling()
-        self.show_all()
+        self._setup_styling()
 
-    def setup_styling(self):
+    def _setup_styling(self):
         self.set_vexpand(True)
+        super()._setup_styling()
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._clicked)
 
     def _clicked(self, widget = None):
@@ -45,7 +45,7 @@ class Backspace_Key(Key):
     def __init__(self):
         super(Backspace_Key, self).__init__("Backspace", "Backspace", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -56,7 +56,7 @@ class Emoji_Key(Key):
         self._ctx           = self.get_style_context()
         self._emoji_popover = emoji_popover
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._clicked)
 
     def _clicked(self, widget = None):
@@ -71,7 +71,7 @@ class Symbols_Key(Key):
         super(Symbols_Key, self).__init__("Symbols", "Symbols", iscontrol = True)
         self.setup_custom_signals()
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._clicked)
 
     def setup_custom_signals(self):
@@ -90,12 +90,13 @@ class Symbols_Key(Key):
 class Enter_Key(Key):
     def __init__(self):
         super(Enter_Key, self).__init__("Enter", "Enter", iscontrol=True)
-        self.setup_styling()
+        self._setup_styling()
 
-    def setup_styling(self):
+    def _setup_styling(self):
         self.set_vexpand(True)
+        super()._setup_styling()
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -106,14 +107,14 @@ class Esc_Key(Key):
     def __init__(self):
         super(Esc_Key, self).__init__("Esc", "Esc", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
 class Space_Key(Key):
     def __init__(self):
         super(Space_Key, self).__init__("Space", "Space", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -132,7 +133,7 @@ class Tab_Key(Key):
     def __init__(self):
         super(Tab_Key, self).__init__("Tab", "Tab", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -140,7 +141,7 @@ class Del_Key(Key):
     def __init__(self):
         super(Del_Key, self).__init__("Del", "Del", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -148,35 +149,35 @@ class Ctrl_Key(Key):
     def __init__(self):
         super(Ctrl_Key, self).__init__("Ctrl", "Ctrl", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
 class Shift_Key(Key):
     def __init__(self):
         super(Shift_Key, self).__init__("Shift", "Shift", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
 class Alt_Key(Key):
     def __init__(self):
         super(Alt_Key, self).__init__("Alt", "Alt", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
 class PrtSc_Key(Key):
     def __init__(self):
         super(PrtSc_Key, self).__init__("PrtSc", "PrtSc", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("released", self._do_press_special_key)
 
 class Up_Key(Key):
     def __init__(self):
         super(Up_Key, self).__init__("Up", "Up", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -184,7 +185,7 @@ class Down_Key(Key):
     def __init__(self):
         super(Down_Key, self).__init__("Down", "Down", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -192,7 +193,7 @@ class Left_Key(Key):
     def __init__(self):
         super(Left_Key, self).__init__("Left", "Left", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)
 
@@ -200,6 +201,6 @@ class Right_Key(Key):
     def __init__(self):
         super(Right_Key, self).__init__("Right", "Right", iscontrol=True)
 
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press_special_key_repeater)
         self.connect("button-release-event", self._do_release)

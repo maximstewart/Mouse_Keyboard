@@ -10,29 +10,47 @@ from gi.repository import GLib
 
 
 class Key(Gtk.Button or Gtk.ToggleButton):
-    def __init__(self, primary = "NULL", secondary = "NULL", iscontrol=False):
+    def __init__(self, primary = "NULL", secondary = "NULL", iscontrol = False):
         super(Key, self).__init__()
 
         self.timer_id          = None
         self.iscontrol         = iscontrol
         self._primary_symbol   = primary
         self._secondary_symbol = secondary
+        self._alt_symbol       = ''
         self._is_upper         = False
         self._is_symbol        = False
         self._is_emoji         = False
+        self.isShiftOn         = False
 
+        self._setup_styling()
+        self._setup_signals()
+        self._subscribe_to_events()
+        self._setup_if_keycombo(secondary)
+
+
+    def _setup_styling(self):
         self.set_label(self._primary_symbol)
-        self.setup_custom_signals()
-        self.setup_signals()
 
-    def setup_custom_signals(self):
-        event_system.subscribe("toggle_caps", self.toggle_caps)
-        event_system.subscribe("toggle_symbol_keys", self.toggle_symbol_keys)
-
-    def setup_signals(self):
+    def _setup_signals(self):
         self.connect("button-press-event", self._do_press)
         self.connect("button-release-event", self._do_release)
         self.connect("toggle-emoji-keys", self.toggle_emoji_keys)
+
+    def _subscribe_to_events(self):
+        event_system.subscribe("toggle_caps", self.toggle_caps)
+        event_system.subscribe("toggle_symbol_keys", self.toggle_symbol_keys)
+
+    def _setup_if_keycombo(self, secondary: str):
+        if not self.iscontrol and (len(secondary) > 1 and '|' in secondary):
+            self._secondary_symbol = secondary[0]
+
+            parts = secondary.split("|")[1].split("+")
+            for part in parts:
+                if "shift" == part.lower():
+                    self.isShiftOn = True
+
+            self._alt_symbol = parts[-1]
 
     def _do_press(self, widget = None, eve = None):
         if self.timer_id:
@@ -44,13 +62,20 @@ class Key(Gtk.Button or Gtk.ToggleButton):
 
     def _do_type(self, widget = None, eve = None):
         key = self.get_label().strip()
-        if not self._is_emoji:
-            typwriter.type(key)
-        else:
+        if self._is_emoji:
             typwriter.set_clipboard_data(key, "utf-16")
             typwriter.isCtrlOn = True
             typwriter.type('v')
             typwriter.isCtrlOn = False
+
+            return True
+
+        if self._alt_symbol and self._is_symbol:
+            typwriter.isShiftOn = self.isShiftOn
+            typwriter.type(self._alt_symbol)
+            typwriter.isShiftOn = False
+        else:
+            typwriter.type(key)
 
         return True
 
