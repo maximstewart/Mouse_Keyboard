@@ -1,4 +1,5 @@
 PyGObject
-pyautogui
 python-xlib
+pyautogui
 setproctitle
+fast-autocomplete[levenshtein]

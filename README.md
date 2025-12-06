@@ -5,6 +5,7 @@ An onscreen keyboard for the mouse.
 * PyGObject
 * python-xlib
 * pyautogui
+* setproctitle
 * fast-autocomplete[levenshtein]
 
 # TODO
