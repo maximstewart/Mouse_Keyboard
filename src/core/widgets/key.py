@@ -52,15 +52,33 @@ class Key(Gtk.Button or Gtk.ToggleButton):
 
             self._alt_symbol = parts[-1]
 
+
     def _do_press(self, widget = None, eve = None):
-        if self.timer_id:
+        if not self.timer_id:
+            self.did_loop_type = False
+            self.timer_id = GLib.timeout_add(500, self._do_wait_loop_type)
+
+
+    def _do_release(self, widget = None, eve = None):
+        if self.did_loop_type:
             GLib.source_remove(self.timer_id)
-            self.timer_id = None
+            self.timer_id      = None
+            self.did_loop_type = False
+            return
 
         self._do_type()
-        self.timer_id = GLib.timeout_add(200, self._do_type)
+        GLib.source_remove(self.timer_id)
+        self.timer_id = None
 
-    def _do_type(self, widget = None, eve = None):
+    def _do_wait_loop_type(self):
+        if not self.timer_id: return False
+        self.did_loop_type = True
+        self.timer_id = GLib.timeout_add(200, self._do_type)
+        return False
+
+    def _do_type(self):
+        if not self.timer_id: return False
+
         key = self.get_label().strip()
         if self._is_emoji:
             typwriter.set_clipboard_data(key, "utf-16")
@@ -74,35 +92,46 @@ class Key(Gtk.Button or Gtk.ToggleButton):
             typwriter.isShiftOn = self.isShiftOn
             typwriter.type(self._alt_symbol)
             typwriter.isShiftOn = False
-        else:
-            typwriter.type(key)
 
+            return True
+
+        typwriter.type(key)
         return True
 
-    def _do_release(self, widget = None, eve = None):
-        if not self.timer_id: return
+
+    def _do_press_special_key(self, widget = None, eve = None):
+        if not self.timer_id:
+            self.did_loop_type = False
+            self.timer_id = GLib.timeout_add(500, self._do_wait_loop_special_type)
+
+    def _do_release_special_key(self, widget = None, eve = None):
+        if self.did_loop_type:
+            GLib.source_remove(self.timer_id)
+            self.timer_id      = None
+            self.did_loop_type = False
+            return
+
+        self._do_type_special_key()
         GLib.source_remove(self.timer_id)
         self.timer_id = None
 
-    def _do_press_special_key(self, widget = None):
-        self._do_type_special_key(widget)
-
-    def _do_press_special_key_repeater(self, widget = None, eve = None):
-        if self.timer_id:
-            GLib.source_remove(self.timer_id)
-            self.timer_id = None
-
-        self._do_type_special_key()
+    def _do_wait_loop_special_type(self):
+        if not self.timer_id: return False
+        self.did_loop_type = True
         self.timer_id = GLib.timeout_add(200, self._do_type_special_key)
+        return False
 
-    def _do_type_special_key(self, widget = None):
+    def _do_type_special_key(self):
+        if not self.timer_id: return False
+
         key = self.get_label()
         if key in ["Ctrl", "Shift", "Alt"]:
-            ctx = widget.get_style_context()
+            ctx = self.get_style_context()
             ctx.remove_class("toggled_bttn") if ctx.has_class("toggled_bttn") else ctx.add_class("toggled_bttn")
 
         typwriter.press_special_keys(key)
         return True
+
 
     def toggle_symbol_keys(self, widget = None, eve = None):
         if not self.iscontrol:

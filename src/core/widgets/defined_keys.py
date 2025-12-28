@@ -46,8 +46,8 @@ class Backspace_Key(Key):
         super(Backspace_Key, self).__init__("Backspace", "Backspace", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Emoji_Key(Key):
     def __init__(self, emoji_popover):
@@ -97,8 +97,8 @@ class Enter_Key(Key):
         super()._setup_styling()
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 
 #############################  Bottom_Key_Row Keys  #############################
@@ -115,8 +115,8 @@ class Space_Key(Key):
         super(Space_Key, self).__init__("Space", "Space", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class AT_Key(Key):
     def __init__(self):
@@ -134,16 +134,16 @@ class Tab_Key(Key):
         super(Tab_Key, self).__init__("Tab", "Tab", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Del_Key(Key):
     def __init__(self):
         super(Del_Key, self).__init__("Del", "Del", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Ctrl_Key(Key):
     def __init__(self):
@@ -178,29 +178,29 @@ class Up_Key(Key):
         super(Up_Key, self).__init__("Up", "Up", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Down_Key(Key):
     def __init__(self):
         super(Down_Key, self).__init__("Down", "Down", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Left_Key(Key):
     def __init__(self):
         super(Left_Key, self).__init__("Left", "Left", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Right_Key(Key):
     def __init__(self):
         super(Right_Key, self).__init__("Right", "Right", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("button-press-event", self._do_press_special_key_repeater)
-        self.connect("button-release-event", self._do_release)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
