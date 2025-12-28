@@ -31,7 +31,6 @@ class Emoji_Notebook(Gtk.Notebook):
         self.set_current_page(0)
         self.set_scrollable(True)
 
-    @daemon_threaded
     def load_ui(self):
         emoji_data = None
         with open(EMOJI_FILE, 'r') as f:

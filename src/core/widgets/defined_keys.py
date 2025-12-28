@@ -18,7 +18,8 @@ class Esc_Key(Key):
         super(Esc_Key, self).__init__("Esc", "Esc", iscontrol = True)
 
     def _setup_signals(self):
-        self.connect("released", self._do_press_special_key)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class CAPS_Key(Key):
     def __init__(self):
@@ -103,13 +104,6 @@ class Enter_Key(Key):
 
 #############################  Bottom_Key_Row Keys  #############################
 
-class Esc_Key(Key):
-    def __init__(self):
-        super(Esc_Key, self).__init__("Esc", "Esc", iscontrol=True)
-
-    def _setup_signals(self):
-        self.connect("released", self._do_press_special_key)
-
 class Space_Key(Key):
     def __init__(self):
         super(Space_Key, self).__init__("Space", "Space", iscontrol=True)
@@ -150,28 +144,32 @@ class Ctrl_Key(Key):
         super(Ctrl_Key, self).__init__("Ctrl", "Ctrl", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("released", self._do_press_special_key)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Shift_Key(Key):
     def __init__(self):
         super(Shift_Key, self).__init__("Shift", "Shift", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("released", self._do_press_special_key)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Alt_Key(Key):
     def __init__(self):
         super(Alt_Key, self).__init__("Alt", "Alt", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("released", self._do_press_special_key)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class PrtSc_Key(Key):
     def __init__(self):
         super(PrtSc_Key, self).__init__("PrtSc", "PrtSc", iscontrol=True)
 
     def _setup_signals(self):
-        self.connect("released", self._do_press_special_key)
+        self.connect("button-press-event", self._do_press_special_key)
+        self.connect("button-release-event", self._do_release_special_key)
 
 class Up_Key(Key):
     def __init__(self):
